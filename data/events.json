@@ -6,7 +6,7 @@
         "title": "鄰居競爭",
         "economicSignal": {
           "level": "綠燈",
-          "message": "今日景氣：🟢綠燈（景氣平穩）",
+          "message": "今日景氣：<img src=\"assets/images/綠燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\">綠燈（景氣平穩）",
           "coefficientMessage": "每個選項會有相對應的係數會影響銷售量以及需要付出的銷貨成本，請玩家做好選擇。"
         },
         "story": {
@@ -59,7 +59,7 @@
         "title": "活動促銷",
         "economicSignal": {
           "level": "紅燈",
-          "message": "今日景氣：🔴紅燈（市場熱絡）",
+          "message": "今日景氣：<img src=\"assets/images/紅燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\">紅燈（市場熱絡）",
           "coefficientMessage": "「我剛剛偷看了氣象報告，今天是『最適合賺錢的一天』欸～」"
         },
         "story": {
@@ -112,7 +112,7 @@
         "title": "外送服務",
         "economicSignal": {
           "level": "綠燈",
-          "message": "今日景氣：🟢 綠燈（平穩）",
+          "message": "今日景氣：<img src=\"assets/images/綠燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\"> 綠燈（平穩）",
           "coefficientMessage": "嘿嘿「聽說住宅區最近流行『買麵包送八卦』，要不要試試？」"
         },
         "story": {
@@ -165,7 +165,7 @@
         "title": "增加曝光度",
         "economicSignal": {
           "level": "紅燈",
-          "message": "今日景氣：🔴 紅燈（市場熱絡）",
+          "message": "今日景氣：<img src=\"assets/images/紅燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\"> 紅燈（市場熱絡）",
           "coefficientMessage": "「早啊小熊～今天的市場氣味不錯，該出貨賺一波了！」"
         },
         "story": {
@@ -218,7 +218,7 @@
         "title": "謠言危機",
         "economicSignal": {
           "level": "藍燈",
-          "message": "今日景氣：🔵 藍燈（市場低迷）",
+          "message": "今日景氣：<img src=\"assets/images/藍燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\"> 藍燈（市場低迷）",
           "coefficientMessage": "「景氣藍燈代表機會藏得更深～我們得挖一挖才行！」"
         },
         "story": {
@@ -271,7 +271,7 @@
         "title": "產品改良",
         "economicSignal": {
           "level": "綠燈",
-          "message": "今日景氣：🟢 綠燈（市場平穩）",
+          "message": "今日景氣：<img src=\"assets/images/綠燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\"> 綠燈（市場平穩）",
           "coefficientMessage": "平穩的市場環境適合進行產品改良，提升顧客滿意度。"
         },
         "story": {
@@ -324,7 +324,7 @@
         "title": "天氣應對",
         "economicSignal": {
           "level": "藍燈",
-          "message": "今日景氣：🔵 藍燈（市場低迷）",
+          "message": "今日景氣：<img src=\"assets/images/藍燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\"> 藍燈（市場低迷）",
           "coefficientMessage": "天氣變化影響客流量，靈活的應對策略能減少損失並創造機會。"
         },
         "story": {
@@ -379,7 +379,7 @@
         "title": "競爭對手折扣戰",
         "economicSignal": {
           "level": "紅燈",
-          "message": "今日景氣：🔴紅燈（熱絡）",
+          "message": "今日景氣：<img src=\"assets/images/紅燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\">紅燈（熱絡）",
           "coefficientMessage": "每個選項會有相對應的係數會影響銷售量以及需要付出的銷貨成本，請玩家做好選擇。"
         },
         "story": {
@@ -432,7 +432,7 @@
         "title": "避免剩貨",
         "economicSignal": {
           "level": "藍燈",
-          "message": "今日景氣：🔵藍燈（低迷）",
+          "message": "今日景氣：<img src=\"assets/images/藍燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\">藍燈（低迷）",
           "coefficientMessage": "市場低迷時需要更精準的庫存管理策略，避免不必要的損失。"
         },
         "story": {
@@ -485,7 +485,7 @@
         "title": "滿足辦公族",
         "economicSignal": {
           "level": "綠燈",
-          "message": "今日景氣：🟢綠燈（平穩）",
+          "message": "今日景氣：<img src=\"assets/images/綠燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\">綠燈（平穩）",
           "coefficientMessage": "平穩的市場環境適合開發新的客群，擴大經營範圍。"
         },
         "story": {
@@ -538,7 +538,7 @@
         "title": "外送平台合作",
         "economicSignal": {
           "level": "紅燈",
-          "message": "今日景氣：🔴紅燈（熱絡）",
+          "message": "今日景氣：<img src=\"assets/images/紅燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\">紅燈（熱絡）",
           "coefficientMessage": "市場熱絡期是拓展新業務的好時機，外送服務能帶來更多商機。"
         },
         "story": {
@@ -591,7 +591,7 @@
         "title": "設備故障危機",
         "economicSignal": {
           "level": "藍燈",
-          "message": "今日景氣：🔵藍燈（低迷）",
+          "message": "今日景氣：<img src=\"assets/images/藍燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\">藍燈（低迷）",
           "coefficientMessage": "市場低迷時遇到設備故障，需要快速且有效的解決方案。"
         },
         "story": {
@@ -644,7 +644,7 @@
         "title": "社區活動贊助",
         "economicSignal": {
           "level": "綠燈",
-          "message": "今日景氣：🟢綠燈（平穩）",
+          "message": "今日景氣：<img src=\"assets/images/綠燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\">綠燈（平穩）",
           "coefficientMessage": "平穩的市場環境適合進行社區活動，建立良好的品牌形象。"
         },
         "story": {
@@ -697,7 +697,7 @@
         "title": "改善結帳動線",
         "economicSignal": {
           "level": "紅燈",
-          "message": "今日景氣：🔴紅燈（熱絡)",
+          "message": "今日景氣：<img src=\"assets/images/紅燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\">紅燈（熱絡)",
           "coefficientMessage": "市場熱絡期需要提升服務效率，改善顧客體驗能帶來更多回頭客。"
         },
         "story": {
@@ -752,7 +752,7 @@
         "title": "運動會",
         "economicSignal": {
           "level": "綠燈",
-          "message": "今日景氣：🟢 綠燈（市場平穩）",
+          "message": "今日景氣：<img src=\"assets/images/綠燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\"> 綠燈（市場平穩）",
           "coefficientMessage": "每個選項會有相對應的係數會影響銷售量以及需要付出的銷貨成本，請玩家做好選擇。"
         },
         "story": {
@@ -805,7 +805,7 @@
         "title": "考前衝刺",
         "economicSignal": {
           "level": "紅燈",
-          "message": "今日景氣：🔴 紅燈（市場熱絡）",
+          "message": "今日景氣：<img src=\"assets/images/紅燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\"> 紅燈（市場熱絡）",
           "coefficientMessage": "市場熱絡期是推出新產品的好時機，針對特定客群設計產品能帶來商機。"
         },
         "story": {
@@ -858,7 +858,7 @@
         "title": "雨天生意",
         "economicSignal": {
           "level": "藍燈",
-          "message": "今日景氣：🔵 藍燈（市場低迷）",
+          "message": "今日景氣：<img src=\"assets/images/藍燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\"> 藍燈（市場低迷）",
           "coefficientMessage": "市場低迷時需要創新服務模式，外送服務能開拓新的客源。"
         },
         "story": {
@@ -911,7 +911,7 @@
         "title": "社團活動",
         "economicSignal": {
           "level": "綠燈",
-          "message": "今日景氣：🟢 綠燈（市場平穩）",
+          "message": "今日景氣：<img src=\"assets/images/綠燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\"> 綠燈（市場平穩）",
           "coefficientMessage": "平穩的市場環境適合進行校園合作，建立長期品牌關係。"
         },
         "story": {
@@ -964,7 +964,7 @@
         "title": "家長日",
         "economicSignal": {
           "level": "紅燈",
-          "message": "今日景氣：🔴 紅燈（市場熱絡）",
+          "message": "今日景氣：<img src=\"assets/images/紅燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\"> 紅燈（市場熱絡）",
           "coefficientMessage": "市場熱絡期是接觸家長客群的好時機，適當的定價策略能帶來長期收益。"
         },
         "story": {
@@ -1017,7 +1017,7 @@
         "title": "天氣衝擊",
         "economicSignal": {
           "level": "紅燈",
-          "message": "今日景氣：🔴紅燈（市場熱絡）",
+          "message": "今日景氣：<img src=\"assets/images/紅燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\">紅燈（市場熱絡）",
           "coefficientMessage": "市場熱絡期遇到天氣變化，需要靈活應變策略來減少損失。"
         },
         "story": {
@@ -1070,7 +1070,7 @@
         "title": "疫情影響",
         "economicSignal": {
           "level": "藍燈",
-          "message": "今日景氣：🔵藍燈（市場低迷）",
+          "message": "今日景氣：<img src=\"assets/images/藍燈.png\" style=\"width: 24px; height: 24px; vertical-align: middle; margin: 0 4px;\">藍燈（市場低迷）",
           "coefficientMessage": "市場低迷期遇到突發事件，需要快速調整策略來應對危機。"
         },
         "story": {

@@ -12,17 +12,17 @@
     <meta name="author" content="小熊哥遊戲團隊">
     
     <!-- Open Graph meta 標籤 (Facebook, LinkedIn 等) -->
-    <meta property="og:title" content="小熊哥捲土重來 - 像素風格麵包坊行銷策略遊戲">
+    <meta property="og:title" content="小熊哥麵包坊 - 像素風行銷策略遊戲">
     <meta property="og:description" content="可愛的像素風格麵包坊行銷策略遊戲！扮演小熊哥，從零開始經營麵包坊，面對多變的市場景氣和各種挑戰，打造屬於你的烘焙帝國！">
     <meta property="og:image" content="https://wall4oppy.github.io/bear-bakery-game/assets/images/小熊哥.png">
     <meta property="og:url" content="https://wall4oppy.github.io/bear-bakery-game/">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="小熊哥捲土重來">
+    <meta property="og:site_name" content="小熊哥麵包坊">
     <meta property="og:locale" content="zh_TW">
     
     <!-- Twitter Card meta 標籤 -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="小熊哥捲土重來 - 像素風格麵包坊行銷策略遊戲">
+    <meta name="twitter:title" content="小熊哥麵包坊 - 像素風行銷策略遊戲">
     <meta name="twitter:description" content="可愛的像素風格麵包坊行銷策略遊戲！扮演小熊哥，從零開始經營麵包坊，面對多變的市場景氣和各種挑戰，打造屬於你的烘焙帝國！">
     <meta name="twitter:image" content="https://wall4oppy.github.io/bear-bakery-game/assets/images/小熊哥.png">
     
@@ -313,24 +313,25 @@
 
         <!-- 底部導航欄 -->
         <nav class="navigation">
-            <button class="nav-button" id="navGashapon">
-                <span class="button-text">扭蛋機</span>
+            <!-- 使用圖片按鈕，保持相同的 ID 和 class，確保按鈕邏輯不變 -->
+            <button class="nav-button nav-button-img" id="navGashapon">
+                <img src="assets/images/扭蛋機.png" alt="扭蛋機" class="nav-img">
             </button>
             
-            <button class="nav-button" id="navStock">
-                <span class="button-text">進貨</span>
+            <button class="nav-button nav-button-img" id="navStock">
+                <img src="assets/images/事件.png" alt="事件" class="nav-img">
             </button>
             
-            <button class="nav-button" id="navMarketing">
-                <span class="button-text">行銷題庫</span>
+            <button class="nav-button nav-button-img" id="navMarketing">
+                <img src="assets/images/行銷題庫.png" alt="行銷題庫" class="nav-img">
             </button>
             
-            <button class="nav-button" id="navLeaderboard">
-                <span class="button-text">排行榜</span>
+            <button class="nav-button nav-button-img" id="navLeaderboard">
+                <img src="assets/images/排行榜.png" alt="排行榜" class="nav-img">
             </button>
             
-            <button class="nav-button" id="navChat">
-                <span class="button-text">聊天室</span>
+            <button class="nav-button nav-button-img" id="navChat">
+                <img src="assets/images/AI助理.png" alt="聊天室" class="nav-img">
             </button>
         </nav>
     </div>
@@ -359,7 +360,7 @@
                     <div class="rank-icon">
                         <img src="assets/images/第二名.png" alt="第二名" class="rank-icon-img">
                     </div>
-                    <div class="player-avatar-small">🐻</div>
+                    <div class="player-avatar-small"><img src="assets/images/小熊哥.png" alt="玩家頭像" style="width: 24px; height: 24px; image-rendering: pixelated;"></div>
                     <div class="rank-name">-</div>
                     <div class="rank-score">-</div>
                 </div>
@@ -368,7 +369,7 @@
                     <div class="rank-icon">
                         <img src="assets/images/第一名.png" alt="第一名" class="rank-icon-img">
                     </div>
-                    <div class="player-avatar-small">🐻</div>
+                    <div class="player-avatar-small"><img src="assets/images/小熊哥.png" alt="玩家頭像" style="width: 24px; height: 24px; image-rendering: pixelated;"></div>
                     <div class="rank-name">-</div>
                     <div class="rank-score">-</div>
                 </div>
@@ -377,7 +378,7 @@
                     <div class="rank-icon">
                         <img src="assets/images/第三名.png" alt="第三名" class="rank-icon-img">
                     </div>
-                    <div class="player-avatar-small">🐻</div>
+                    <div class="player-avatar-small"><img src="assets/images/小熊哥.png" alt="玩家頭像" style="width: 24px; height: 24px; image-rendering: pixelated;"></div>
                     <div class="rank-name">-</div>
                     <div class="rank-score">-</div>
                 </div>
@@ -429,7 +430,7 @@
             
             <!-- 底部按鈕 -->
             <div class="leaderboard-footer">
-                <button class="leaderboard-btn refresh-btn">🔄 刷新排行榜</button>
+                <button class="leaderboard-btn refresh-btn"><img src="assets/images/重整.png" alt="刷新" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 8px; image-rendering: pixelated;"> 刷新排行榜</button>
                 <button class="leaderboard-btn close-btn">關閉</button>
             </div>
         </div>
@@ -455,5 +456,28 @@
             document.removeEventListener('pointerdown', once);
         }, { passive: true });
     </script>
+
+    <!-- 新手教學覆蓋層 -->
+    <div id="tutorialOverlay" class="tutorial-overlay" style="display: none;">
+        <!-- 高亮框 -->
+        <div id="tutorialHighlight" class="tutorial-highlight"></div>
+        
+        <!-- 教學對話框 -->
+        <div id="tutorialDialog" class="tutorial-dialog">
+            <div class="tutorial-content">
+                <div class="tutorial-icon"><img src="assets/images/蜜蜂鼠標.png" style="width: 76.8px; height: 76.8px; image-rendering: pixelated;"></div>
+                <h3 class="tutorial-title"></h3>
+                <p class="tutorial-text"></p>
+                <div class="tutorial-progress">
+                    <span class="tutorial-step-counter"></span>
+                </div>
+                <div class="tutorial-buttons">
+                    <button id="tutorialSkip" class="tutorial-btn tutorial-skip">跳過教學</button>
+                    <button id="tutorialPrev" class="tutorial-btn tutorial-prev">上一步</button>
+                    <button id="tutorialNext" class="tutorial-btn tutorial-next">下一步</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

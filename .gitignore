@@ -3,6 +3,39 @@
 Thumbs.db
 desktop.ini
 
+# Windows 桌面文件
+*.lnk
+*.url
+NTUSER.*
+*.TM.blf
+*.TMContainer*
+ntuser.dat.*
+ntuser.ini
+
+# 桌面目錄結構（防止誤提交整個桌面）
+AppData/
+Contacts/
+Documents/
+Downloads/
+Favorites/
+Intel/
+Links/
+Music/
+Pictures/
+Saved Games/
+Searches/
+Videos/
+OneDrive/
+
+# VS Code 擴展（不應該上傳）
+.vscode/extensions/
+
+# 其他不應該上傳的目錄
+.wdm/
+.cache/
+.config/
+.local/
+
 # 編輯器文件
 .vscode/
 .idea/

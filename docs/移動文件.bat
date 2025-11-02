@@ -8,8 +8,8 @@ copy "Zpix.ttf" "assets\fonts\Zpix.ttf" >nul 2>&1
 copy "登入背景.png" "assets\images\登入背景.png" >nul 2>&1
 copy "中間框1.png" "assets\images\中間框1.png" >nul 2>&1
 copy "會動的熊精靈.gif" "assets\images\會動的熊精靈.gif" >nul 2>&1
-copy "蜂蜜幣.png" "assets\images\蜂蜜幣.png" >nul 2>&1
-copy "蜂蜜幣計數器.png" "assets\images\蜂蜜幣計數器.png" >nul 2>&1
+copy "麵包幣.png" "assets\images\麵包幣.png" >nul 2>&1
+copy "麵包幣計數器.png" "assets\images\麵包幣計數器.png" >nul 2>&1
 copy "聲望計數器.png" "assets\images\聲望計數器.png" >nul 2>&1
 copy "顧客滿意度計數器.png" "assets\images\顧客滿意度計數器.png" >nul 2>&1
 copy "3個計數器.png" "assets\images\3個計數器.png" >nul 2>&1
