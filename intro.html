@@ -192,6 +192,12 @@
     </style>
 </head>
 <body>
+    <!-- 背景音樂 -->
+    <audio id="backgroundMusic" loop preload="auto">
+        <source src="assets/music/nostalgia2-fast.mp3" type="audio/mpeg">
+        您的瀏覽器不支援音頻播放。
+    </audio>
+
     <div class="intro-container">
         <!-- 載入畫面 -->
         <div class="loading-screen" id="loadingScreen">
@@ -209,6 +215,61 @@
     </div>
 
     <script>
+        // 背景音樂管理器
+        const BackgroundMusicManager = {
+            audio: null,
+            isPlaying: false,
+            volume: parseFloat(localStorage.getItem('musicVolume')) || 0.5, // 預設音量 50%
+            
+            init() {
+                this.audio = document.getElementById('backgroundMusic');
+                if (this.audio) {
+                    // 設定預設音量
+                    this.audio.volume = this.volume;
+                    
+                    // 嘗試自動播放（可能需要用戶互動）
+                    this.tryPlay();
+                    
+                    // 監聽用戶互動事件來啟動音樂播放
+                    const events = ['click', 'keydown', 'touchstart'];
+                    const playOnce = () => {
+                        if (!this.isPlaying) {
+                            this.tryPlay();
+                        }
+                        events.forEach(event => {
+                            document.removeEventListener(event, playOnce);
+                        });
+                    };
+                    events.forEach(event => {
+                        document.addEventListener(event, playOnce, { once: true, passive: true });
+                    });
+                }
+            },
+            
+            tryPlay() {
+                if (!this.audio) return;
+                
+                const playPromise = this.audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        this.isPlaying = true;
+                        console.log('背景音樂開始播放');
+                    }).catch(error => {
+                        console.log('背景音樂自動播放被阻止，將在用戶互動後播放:', error);
+                        // 如果自動播放失敗，等待用戶互動
+                    });
+                }
+            },
+            
+            stop() {
+                if (this.audio && this.isPlaying) {
+                    this.audio.pause();
+                    this.audio.currentTime = 0;
+                    this.isPlaying = false;
+                }
+            }
+        };
+
         class IntroManager {
             constructor() {
                 this.videos = [
@@ -401,6 +462,9 @@
             }
             
             completeIntro() {
+                // 停止背景音樂
+                BackgroundMusicManager.stop();
+                
                 // 添加淡出效果
                 document.body.classList.add('fade-out');
                 
@@ -493,6 +557,9 @@
 
         // 頁面載入完成後初始化
         document.addEventListener('DOMContentLoaded', () => {
+            // 初始化背景音樂
+            BackgroundMusicManager.init();
+            // 初始化前導劇情管理器
             new IntroManager();
         });
     </script>
