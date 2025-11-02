@@ -3,79 +3,46 @@
 Thumbs.db
 desktop.ini
 
-# Windows 桌面文件
-*.lnk
-*.url
-NTUSER.*
-*.TM.blf
-*.TMContainer*
-ntuser.dat.*
-ntuser.ini
-
-# 桌面目錄結構（防止誤提交整個桌面）
-AppData/
-Contacts/
-Documents/
-Downloads/
-Favorites/
-Intel/
-Links/
-Music/
-Pictures/
-Saved Games/
-Searches/
-Videos/
-OneDrive/
-
-# VS Code 擴展（不應該上傳）
-.vscode/extensions/
-
-# 其他不應該上傳的目錄
-.wdm/
-.cache/
-.config/
-.local/
-
-# 編輯器文件
+# 編輯器配置（保留個人編輯器設定不公開）
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
+.cursor/
 
-# 臨時文件
+# 作業系統產生的檔案
+*~
 *.tmp
 *.temp
-*.log
 
-# Node.js (如果將來需要)
+# Node.js（如果將來用到）
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+package-lock.json
+yarn.lock
 
-# 環境變量文件
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# 測試和開發文件
+*_test.html
+cursor-test.html
+*-test.html
+test_*.html
 
-# 構建輸出
-dist/
-build/
+# 開發計劃文件
+.plan.md
+*.plan.md
 
-# 緩存文件
-.cache/
-*.cache
-
-# 備份文件
-*.bak
-*.backup
-*~
-
-# 壓縮文件
+# 部署和備份文件
 *.zip
 *.rar
 *.7z
-*.tar.gz
+
+# 開發過程中的臨時文件
+*.bat
+*.ps1
+*_test.html
+cursor-test.html
+direct_volume_test.html
+simple_volume_test.html
+test_financial_report.html
+test_volume_controls.html
+README_GIT_RESET.md
+UPDATE_SUMMARY.md
