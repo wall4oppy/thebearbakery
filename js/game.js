@@ -1091,6 +1091,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // 遊戲資源管理系統
     const GameResources = {
         // 初始資源值
+        initialResources: {
+            honey: 300000,    // 初始蜂蜜幣
+            bearPoints: 0,   // 初始熊點數
+            medals: 0        // 初始勳章
+        },
         resources: {
             honey: 300000,    // 蜂蜜幣（營收資金）
             bearPoints: 0,   // 熊點數（顧客滿意度）
@@ -1151,7 +1156,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 檢查成就進度
                 if (window.AchievementSystem) {
                     if (type === 'honey') {
-                        window.AchievementSystem.checkProgress('total_honey', this.resources[type]);
+                        // 累積所有增加的蜂蜜幣（不管是否花掉）
+                        // 只有當 amount > 0 時才累積（賺到的），負數（花掉的）不計算
+                        if (amount > 0) {
+                            window.AchievementSystem.checkProgress('total_honey', amount);
+                        }
                     } else if (type === 'bearPoints') {
                         window.AchievementSystem.checkProgress('satisfaction', this.resources[type]);
                     } else if (type === 'medals') {
@@ -1236,9 +1245,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // 重置為初始資源值
         resetToInitial() {
             this.resources = {
-                honey: 300000,
-                bearPoints: 0,
-                medals: 0
+                honey: this.initialResources.honey || 300000,
+                bearPoints: this.initialResources.bearPoints || 0,
+                medals: this.initialResources.medals || 0
             };
             this.updateDisplay();
             this.saveResources();
@@ -1867,7 +1876,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
     
-    // 扭蛋機系統 - 抽獎計數器（用於十連保底）
+    // 扭蛋機系統 - 抽獎計數器（用於保底機率累積）
     const GashaponSystem = {
         // 獲取當前抽獎計數
         getDrawCount() {
@@ -1881,9 +1890,28 @@ document.addEventListener('DOMContentLoaded', function() {
             return count;
         },
         
-        // 重置抽獎計數（每10次重置）
+        // 重置抽獎計數（抽到SSR或SR時重置）
         resetDrawCount() {
             localStorage.setItem('gashaponDrawCount', '0');
+            localStorage.setItem('gashaponBonusRate', '0');
+        },
+        
+        // 獲取累積的保底機率（每抽一次未中SSR/SR增加0.01%）
+        getBonusRate() {
+            return parseFloat(localStorage.getItem('gashaponBonusRate') || '0');
+        },
+        
+        // 增加保底機率（每抽一次未中SSR/SR）
+        incrementBonusRate() {
+            const currentRate = this.getBonusRate();
+            const newRate = currentRate + 0.01; // 增加0.01%
+            localStorage.setItem('gashaponBonusRate', newRate.toString());
+            return newRate;
+        },
+        
+        // 重置保底機率（抽到SSR或SR時）
+        resetBonusRate() {
+            localStorage.setItem('gashaponBonusRate', '0');
         },
         
         // 檢查是否需要保底（第10次）
@@ -3855,8 +3883,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (achievement.condition.type === type) {
                             const currentValue = this.progress[achievement.id] || 0;
                             
-                            if (type === 'total_honey' || type === 'total_bread') {
-                                this.progress[achievement.id] = Math.max(currentValue, value);
+                            if (type === 'total_honey') {
+                                // 累積所有賺到的蜂蜜幣（累積模式，類似 correct_answers）
+                                this.progress[achievement.id] = currentValue + value;
+                            } else if (type === 'total_bread') {
+                                // 麵包數量是累積模式（累積販售的總數）
+                                this.progress[achievement.id] = currentValue + value;
                             } else if (type === 'correct_answers' || type === 'gashapon_count') {
                                 this.progress[achievement.id] = currentValue + value;
                             } else {
@@ -5184,26 +5216,24 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 扭蛋抽獎邏輯
     function performGashaponDraw(isTenDraw = false) {
-        // 檢查是否需要保底（在抽獎前檢查當前計數）
-        // 當前計數是0-9，第10次時計數應該是9
-        const currentCount = GashaponSystem.getDrawCount();
-        const needsGuarantee = (currentCount % 10 === 9); // 第10次（0-9索引中的9）
+        // 獲取累積的保底機率（每抽一次未中SSR/SR增加0.01%）
+        const bonusRate = GashaponSystem.getBonusRate();
         
         // 獎品池定義
-        // SSR (3%): 頭像11 (1.5%), 頭像12 (1.5%)
-        // SR (7%): 頭像7, 8, 9, 10 各 1.75%
-        // R (90%): 蜂蜜幣 100 (40%), 200 (30%), 500 (15%), 1000 (5%)
+        // SSR (1%): 頭像11 (0.5%), 頭像12 (0.5%)
+        // SR (3%): 頭像7, 8, 9, 10 各 0.75%
+        // R (96%): 蜂蜜幣 100 (40%), 200 (30%), 500 (15%), 1000 (5%)
         
         const prizePool = {
             SSR: [
-                { name: '頭像 #12', type: 'avatar', avatarId: 'avatar12', rarity: 'SSR', probability: 1.5 },
-                { name: '頭像 #11', type: 'avatar', avatarId: 'avatar11', rarity: 'SSR', probability: 1.5 }
+                { name: '頭像 #12', type: 'avatar', avatarId: 'avatar12', rarity: 'SSR', probability: 0.5 },
+                { name: '頭像 #11', type: 'avatar', avatarId: 'avatar11', rarity: 'SSR', probability: 0.5 }
             ],
             SR: [
-                { name: '頭像 #10', type: 'avatar', avatarId: 'avatar10', rarity: 'SR', probability: 1.75 },
-                { name: '頭像 #9', type: 'avatar', avatarId: 'avatar9', rarity: 'SR', probability: 1.75 },
-                { name: '頭像 #8', type: 'avatar', avatarId: 'avatar8', rarity: 'SR', probability: 1.75 },
-                { name: '頭像 #7', type: 'avatar', avatarId: 'avatar7', rarity: 'SR', probability: 1.75 }
+                { name: '頭像 #10', type: 'avatar', avatarId: 'avatar10', rarity: 'SR', probability: 0.75 },
+                { name: '頭像 #9', type: 'avatar', avatarId: 'avatar9', rarity: 'SR', probability: 0.75 },
+                { name: '頭像 #8', type: 'avatar', avatarId: 'avatar8', rarity: 'SR', probability: 0.75 },
+                { name: '頭像 #7', type: 'avatar', avatarId: 'avatar7', rarity: 'SR', probability: 0.75 }
             ],
             R: [
                 { name: '蜂蜜幣 x1000', type: 'honey', amount: 1000, rarity: 'R', probability: 5 },
@@ -5213,45 +5243,39 @@ document.addEventListener('DOMContentLoaded', function() {
             ]
         };
         
+        // 基礎機率（SSR 1%, SR 3%）
+        const baseSSRRate = 1.0; // SSR 基礎機率 1%
+        const baseSRRate = 3.0;   // SR 基礎機率 3%
+        
+        // 加上保底機率（bonusRate會同時增加SSR和SR的機率）
+        const ssrRate = baseSSRRate + bonusRate;
+        const srRate = baseSRRate + bonusRate;
+        const totalRareRate = ssrRate + srRate; // SSR + SR 總機率
+        
         let selectedPrize = null;
         
-        // 如果需要保底，強制抽取SR或SSR
-        if (needsGuarantee) {
-            // 保底：SR和SSR各50%機率
-            const isSSR = Math.random() < 0.5;
-            if (isSSR) {
-                // 抽取SSR（兩個頭像各50%）
-                const ssrIndex = Math.random() < 0.5 ? 0 : 1;
-                selectedPrize = prizePool.SSR[ssrIndex];
-            } else {
-                // 抽取SR（四個頭像各25%）
-                const srIndex = Math.floor(Math.random() * 4);
-                selectedPrize = prizePool.SR[srIndex];
-            }
+        // 正常抽獎（使用調整後的機率）
+        const random = Math.random() * 100;
+        
+        if (random < ssrRate) {
+            // SSR (基礎1% + 保底機率)
+            const ssrIndex = Math.random() < 0.5 ? 0 : 1;
+            selectedPrize = prizePool.SSR[ssrIndex];
+        } else if (random < totalRareRate) {
+            // SR (基礎3% + 保底機率)
+            const srIndex = Math.floor(Math.random() * 4);
+            selectedPrize = prizePool.SR[srIndex];
         } else {
-            // 正常抽獎
-            const random = Math.random() * 100;
-            
-            if (random < 3) {
-                // SSR (3%)
-                const ssrIndex = Math.random() < 0.5 ? 0 : 1;
-                selectedPrize = prizePool.SSR[ssrIndex];
-            } else if (random < 10) {
-                // SR (7%)
-                const srIndex = Math.floor(Math.random() * 4);
-                selectedPrize = prizePool.SR[srIndex];
+            // R (剩餘機率)
+            const rRandom = Math.random() * 100;
+            if (rRandom < 5) {
+                selectedPrize = prizePool.R[0]; // 1000蜂蜜幣
+            } else if (rRandom < 20) {
+                selectedPrize = prizePool.R[1]; // 500蜂蜜幣
+            } else if (rRandom < 50) {
+                selectedPrize = prizePool.R[2]; // 200蜂蜜幣
             } else {
-                // R (90%)
-                const rRandom = Math.random() * 100;
-                if (rRandom < 5) {
-                    selectedPrize = prizePool.R[0]; // 1000蜂蜜幣
-                } else if (rRandom < 20) {
-                    selectedPrize = prizePool.R[1]; // 500蜂蜜幣
-                } else if (rRandom < 50) {
-                    selectedPrize = prizePool.R[2]; // 200蜂蜜幣
-                } else {
-                    selectedPrize = prizePool.R[3]; // 100蜂蜜幣
-                }
+                selectedPrize = prizePool.R[3]; // 100蜂蜜幣
             }
         }
         
@@ -5261,17 +5285,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 解鎖頭像
                 const isNew = AvatarCollectionSystem.unlockAvatar(selectedPrize.avatarId);
                 selectedPrize.isNew = isNew;
+                // 抽到SSR或SR，重置保底機率
+                GashaponSystem.resetBonusRate();
+                GashaponSystem.resetDrawCount();
             } else {
-                // 給予資源
+                // 給予資源（抽到R）
                 GameResources.addResource(selectedPrize.type, selectedPrize.amount);
+                // 抽到R，增加保底機率0.01%
+                GashaponSystem.incrementBonusRate();
             }
             
             // 增加抽獎計數（在給予獎品後）
-            const newCount = GashaponSystem.incrementDrawCount();
-            // 如果達到10次，重置計數器（為下一輪做準備）
-            if (newCount >= 10) {
-                GashaponSystem.resetDrawCount();
-            }
+            GashaponSystem.incrementDrawCount();
             
             // 檢查扭蛋成就
             if (window.AchievementSystem) {
@@ -7248,6 +7273,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 加入銷售收入
                 GameResources.addResource('honey', salesResult.totalRevenue);
                 
+                // 記錄麵包銷售數量到成就系統
+                if (window.AchievementSystem && salesResult.totalSalesVolume > 0) {
+                    window.AchievementSystem.checkProgress('total_bread', salesResult.totalSalesVolume);
+                }
+                
                 console.log(`[蜂蜜幣.png] 事件銷售完成: 收入=${salesResult.totalRevenue}, 銷售量=${salesResult.totalSalesVolume}`);
             }
             
@@ -7506,9 +7536,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const regionIconName = regionType === '商業區' ? '商業區.png' : regionType === '學區' ? '學區.png' : '住宅區.png';
             console.log(`[${regionIconName}] 選擇地區: ${regionType} - ${district} (係數${coefficient})`);
             console.log(`[蜂蜜幣.png] 支付租金: 基礎租金${RegionCoefficientsManager.getBaseRent(regionType)} × ${coefficient} = ${totalRent}`);
-            GameResources.resources.honey -= totalRent;
-            GameResources.updateDisplay();
-            GameResources.saveResources();
+            GameResources.subtractResource('honey', totalRent);
             
             this.selectedRegion = regionType;
             this.selectedDistrict = district;
@@ -8544,9 +8572,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // 地區列表
             const regions = [
-                { name: '商業區', icon: '<img src="assets/images/商業區.png" style="width: 96px; height: 96px; vertical-align: middle;">', description: '人潮多，競爭激烈', rent: 36000 },
-                { name: '學區', icon: '<img src="assets/images/學區.png" style="width: 96px; height: 96px; vertical-align: middle;">', description: '學生客群，時段集中', rent: 26000 },
-                { name: '住宅區', icon: '<img src="assets/images/住宅區.png" style="width: 96px; height: 96px; vertical-align: middle;">', description: '穩定客源，節奏平緩', rent: 42800 }
+                { name: '商業區', icon: '<img src="assets/images/商業區.png" style="width: 96px; height: 96px; vertical-align: middle;">', description: '人潮多，競爭激烈', rent: 42800 },
+                { name: '學區', icon: '<img src="assets/images/學區.png" style="width: 96px; height: 96px; vertical-align: middle;">', description: '學生客群，時段集中', rent: 36000 },
+                { name: '住宅區', icon: '<img src="assets/images/住宅區.png" style="width: 96px; height: 96px; vertical-align: middle;">', description: '穩定客源，節奏平緩', rent: 26000 }
             ];
             
             regions.forEach(region => {
@@ -12667,7 +12695,17 @@ document.addEventListener('DOMContentLoaded', function() {
              delivery: ['外送', '配送', '送貨', '外賣', 'delivery', '外送服務', '送餐', '宅配'],
              location: ['地址', '位置', '在哪裡', '地點', 'location', '地址在哪', '在哪', '位址', '地址是'],
              traffic_light: ['景氣燈號', '景氣', '燈號', '綠燈', '紅燈', '藍燈', '綠色', '紅色', '藍色', '景氣指標', '經濟指標'],
-             game: ['遊戲', '怎麼玩', '玩法', '經營', '步驟', '進貨', '事件', '收益', '聲望', '滿意度', '報表', '營收', '成本', '淨利潤', '怎麼經營'],
+             game: ['遊戲', '怎麼玩', '玩法', '經營', '步驟', '怎麼經營'],
+            stock: ['進貨', '進貨量', '進貨策略', '庫存', '存貨'],
+            event: ['事件', '隨機事件', '應對事件', '事件選擇'],
+            revenue: ['收益', '營收', '收入', '賺錢', '賺'],
+            reputation: ['聲望', '品牌聲望', '信任度'],
+            satisfaction: ['滿意度', '顧客滿意', '顧客滿意度', '客戶滿意', '客戶滿意度'],
+            report: ['報表', '經營報表', '業績報表', '報表分析'],
+            cost: ['成本', '成本管理', '成本控制', '成本分析', '支出'],
+            inventory: ['庫存', '庫存管理', '存貨', '庫存控制'],
+            profit: ['利潤', '淨利潤', '獲利', '賺錢'],
+            customer: ['顧客', '客戶', '客人', 'customer', '顧客體驗', '顧客滿意', '顧客回饋', '顧客忠誠', '顧客服務', '顧客關係'],
              comfort: ['心情', '難過', '煩惱', '安慰', '不開心', '沮喪', '低落', '心情不好'],
              weather: ['天氣', '下雨', '晴天', '陰天', '氣候'],
              '4p': ['4p', '四p', '行銷4p', '行銷四p', 'marketing mix', '行銷組合', '4p策略'],
@@ -12679,7 +12717,6 @@ document.addEventListener('DOMContentLoaded', function() {
              channel_management: ['通路', '通路策略', '通路管理', 'channel', '銷售通路', '通銷管道', '通路設計'],
              promotion_tools: ['推廣', '推廣策略', '促銷', '廣告', '宣傳', '行銷活動', 'promotion', '行銷推廣'],
              competition: ['競爭', '競爭對手', '差異化', '定位', '競爭策略', '競爭分析', 'competitive'],
-             customer: ['顧客體驗', '顧客滿意', '顧客回饋', '顧客忠誠', '顧客服務', '顧客關係', 'customer', '客戶'],
              digital_marketing: ['數位行銷', '數位', '數位化', '電商', '線上', '網路', '網站', 'digital', 'online', '電子商務'],
              crm: ['crm', '顧客關係管理', '客戶關係管理', '顧客管理系統', '客戶管理'],
              social_media: ['社群媒體', '社群', 'facebook', 'instagram', 'twitter', 'ig', 'fb', '社群平台', '社交媒體'],
@@ -13169,9 +13206,7 @@ document.addEventListener('DOMContentLoaded', function() {
                   const coefficient = 1.27;
                   
                   const totalRent = RegionCoefficientsManager.calculateTotalRent(regionType, coefficient);
-                  GameResources.resources.honey -= totalRent;
-                  GameResources.updateDisplay();
-                  GameResources.saveResources();
+                  GameResources.subtractResource('honey', totalRent);
                   
                   GameFlowManager.selectedRegion = regionType;
                   GameFlowManager.selectedDistrict = district;
@@ -13300,6 +13335,14 @@ document.addEventListener('DOMContentLoaded', function() {
                               
                               // 應用效果
                               const effects = correctChoice.effects;
+                              // 加入銷售收入
+                              if (salesResult && salesResult.totalRevenue) {
+                                  GameResources.addResource('honey', salesResult.totalRevenue);
+                              }
+                              // 記錄麵包銷售數量到成就系統
+                              if (window.AchievementSystem && salesResult && salesResult.totalSalesVolume > 0) {
+                                  window.AchievementSystem.checkProgress('total_bread', salesResult.totalSalesVolume);
+                              }
                               if (effects.honey) GameResources.addResource('honey', effects.honey);
                               if (effects.satisfaction) GameResources.addResource('bearPoints', effects.satisfaction);
                               if (effects.reputation) GameResources.addResource('medals', effects.reputation);
