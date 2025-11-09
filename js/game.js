@@ -14058,8 +14058,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 position: "center"
             },
             {
-                title: "與AI虛擬玩家競爭",
-                text: "<p style='margin-bottom: 15px;'>遊戲中有<strong style='color: #8b4513; font-size: 16px;'>8個AI虛擬玩家</strong>會與你同步進行遊戲：</p><ul style='text-align: left; padding-left: 25px; margin: 10px 0 15px 0;'><li>🎯 <strong>不同性格類型</strong>：激進型、均衡型、保守型，各有特色</li><li>📊 <strong>技能水平差異</strong>：從55%到90%不等，讓你體驗不同難度</li><li>🏆 <strong>排行榜競爭</strong>：在排行榜中可以看到與虛擬玩家的排名</li></ul><p style='margin-top: 15px; font-weight: bold; color: #4CAF50; text-align: center;'><img src='assets/images/2.png' style='width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;'> 提示：打開排行榜功能，隨時查看你的排名位置！</p>",
+                title: "與虛擬玩家競爭",
+                text: "<p style='margin-bottom: 15px;'>遊戲中有<strong style='color: #8b4513; font-size: 16px;'>8個虛擬玩家</strong>會與你同步進行遊戲：</p><ul style='text-align: left; padding-left: 25px; margin: 10px 0 15px 0;'><li>🎯 <strong>不同性格類型</strong>：激進型、均衡型、保守型，各有特色</li><li>📊 <strong>技能水平差異</strong>：從55%到90%不等，讓你體驗不同難度</li><li>🏆 <strong>排行榜競爭</strong>：在排行榜中可以看到與虛擬玩家的排名</li></ul><p style='margin-top: 15px; font-weight: bold; color: #4CAF50; text-align: center;'><img src='assets/images/2.png' style='width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;'> 提示：打開排行榜功能，隨時查看你的排名位置！</p>",
                 highlight: null,
                 position: "center"
             },
