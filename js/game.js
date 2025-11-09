@@ -8016,7 +8016,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 border: 3px solid #8b4513;
                 border-radius: 6px;
                 color: #fff;
-                font-size: 13px;
+                font-size: 16px;
                 cursor: pointer;
                 transition: all 0.3s ease;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -10871,7 +10871,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 background-color: white;
                 color: #654321;
                 font-family: 'Zpix', 'Press Start 2P', monospace;
-                font-size: 13px;
+                font-size: 16px;
                 resize: none;
                 height: 45px;
                 max-height: 100px;
@@ -11114,7 +11114,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 max-width: 75%;
                 padding: 10px 14px;
                 border-radius: 10px;
-                font-size: 13px;
+                font-size: 16px;
                 font-family: 'Zpix', 'Press Start 2P', monospace;
                 line-height: 1.6;
                 word-wrap: break-word;
