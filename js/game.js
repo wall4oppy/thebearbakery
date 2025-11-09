@@ -10151,7 +10151,9 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             
             scoreCard.innerHTML = `
-                <p style="font-size: 46px; margin-bottom: 8px;">${result.correctRate >= 0.7 ? '🎉' : '😅'}</p>
+                <div style="margin-bottom: 8px;">
+                    <img src="${result.correctRate >= 0.7 ? 'assets/images/19.png' : 'assets/images/你答對太少.png'}" style="width: 60px; height: 60px; image-rendering: pixelated;">
+                </div>
                 <p style="color: #654321; font-size: 18px; font-weight: bold; margin-bottom: 6px;">
                     答對 ${result.correctCount} / ${result.totalCount} 題
                 </p>
